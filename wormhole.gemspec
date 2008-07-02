@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{wormhole}
-  s.version = "0.0.2"
+  s.version = "0.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Genki Takiuchi"]
@@ -11,10 +11,10 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ["README", "ChangeLog"]
   s.files = ["README", "ChangeLog", "Rakefile", "test/test_helper.rb", "test/wormhole_test.rb", "lib/wormhole.rb"]
   s.has_rdoc = true
-  s.homepage = %q{http://wormhole.rubyforge.org}
+  s.homepage = %q{http://cocktail-party.rubyforge.org}
   s.rdoc_options = ["--title", "wormhole documentation", "--charset", "utf-8", "--opname", "index.html", "--line-numbers", "--main", "README", "--inline-source", "--exclude", "^(examples|extras)/"]
   s.require_paths = ["lib"]
-  s.rubyforge_project = %q{wormhole}
+  s.rubyforge_project = %q{cocktail-party}
   s.rubygems_version = %q{1.2.0}
   s.summary = %q{The utility library for making a wormhole on the stack frame.}
   s.test_files = ["test/test_helper.rb"]

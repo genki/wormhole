@@ -7,6 +7,7 @@ require 'rake/gempackagetask'
 require 'rake/rdoctask'
 require 'rake/contrib/rubyforgepublisher'
 require 'rake/contrib/sshpublisher'
+require 'rubyforge'
 require 'fileutils'
 include FileUtils
 
@@ -14,10 +15,10 @@ NAME              = "wormhole"
 AUTHOR            = "Genki Takiuchi"
 EMAIL             = "genki@s21g.com"
 DESCRIPTION       = "The utility library for making a wormhole on the stack frame."
-RUBYFORGE_PROJECT = "wormhole"
+RUBYFORGE_PROJECT = "cocktail-party"
 HOMEPATH          = "http://#{RUBYFORGE_PROJECT}.rubyforge.org"
 BIN_FILES         = %w(  )
-VERS              = "0.0.2"
+VERS              = "0.0.3"
 
 REV = File.read(".svn/entries")[/committed-rev="(d+)"/, 1] rescue nil
 CLEAN.include ['**/.*.sw?', '*.gem', '.config']
@@ -112,7 +113,7 @@ task :release => [:clean, :package] do |t|
 	abort "Versions don't match #{v} vs #{VERS}" unless v == VERS
 	pkg = "pkg/#{NAME}-#{VERS}"
 
-	rf = RubyForge.new
+	rf = RubyForge.new.configure
 	puts "Logging in"
 	rf.login
 
