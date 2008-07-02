@@ -1,4 +1,3 @@
-(in /home/takiuchi/project/wormhole)
 Gem::Specification.new do |s|
   s.name = %q{wormhole}
   s.version = "0.0.1"
