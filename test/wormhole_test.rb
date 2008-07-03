@@ -8,16 +8,16 @@ class WormholeTest < Test::Unit::TestCase
 
   def foo
     @result << "foo"
-    Wormhole.throw :foo, :bar => 'hello' do |data|
+    Wormhole.throw :bar => 'hello' do |data|
       @result << data[:bar]
     end
     @result << "bar"
   end
 
   def test_wormhole
-    Wormhole.catch(:foo) do
+    Wormhole.catch do
       foo
-    end.open do |data|
+    end.return do |data|
       @result << data[:bar]
       data[:bar] = 'world!'
     end
@@ -25,10 +25,11 @@ class WormholeTest < Test::Unit::TestCase
     assert_equal ['foo', 'hello', 'world!', 'bar'], @result
   end
 
-  def test_wormhole_without_open
-    w = Wormhole.catch(:foo) do
+  def test_wormhole_without_throw
+    w = Wormhole.catch do
+      "test"
     end
-    assert_equal nil, w.open
+    assert_equal "test", w.return
   end
 
   def test_wormhole_without_symbol
@@ -40,7 +41,7 @@ class WormholeTest < Test::Unit::TestCase
       @result << "bar"
       'result'
     end
-    result = w.open do |data|
+    result = w.return do |data|
       @result << data[:bar]
       data[:bar] = 'world!'
     end
