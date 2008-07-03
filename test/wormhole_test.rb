@@ -8,23 +8,44 @@ class WormholeTest < Test::Unit::TestCase
 
   def foo
     @result << "foo"
-    w = Wormhole.new :foo => 'hello'
-    @result << w[:foo]
+    Wormhole.throw :foo, :bar => 'hello' do |data|
+      @result << data[:bar]
+    end
     @result << "bar"
   end
 
   def test_wormhole
-    foo
+    Wormhole.catch(:foo) do
+      foo
+    end.open do |data|
+      @result << data[:bar]
+      data[:bar] = 'world!'
+    end
     assert !@result.empty?
-    assert_equal [
-      'foo',
-      'hello',
-      'world!',
-      'bar',
-      ], @result
-  rescue Wormhole => w
-    @result << w[:foo]
-    w[:foo] = 'world!'
-    w.close
+    assert_equal ['foo', 'hello', 'world!', 'bar'], @result
+  end
+
+  def test_wormhole_without_open
+    w = Wormhole.catch(:foo) do
+    end
+    assert_equal nil, w.open
+  end
+
+  def test_wormhole_without_symbol
+    w = Wormhole.catch do
+      @result << "foo"
+      Wormhole.throw :bar => 'hello' do |data|
+        @result << data[:bar]
+      end
+      @result << "bar"
+      'result'
+    end
+    result = w.open do |data|
+      @result << data[:bar]
+      data[:bar] = 'world!'
+    end
+    assert_equal 'result', result
+    assert !@result.empty?
+    assert_equal ['foo', 'hello', 'world!', 'bar'], @result
   end
 end
