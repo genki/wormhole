@@ -8,9 +8,8 @@ class WormholeTest < Test::Unit::TestCase
 
   def foo
     @result << "foo"
-    Wormhole.throw :bar => 'hello' do |data|
-      @result << data[:bar]
-    end
+    data = Wormhole.throw :bar => 'hello'
+    @result << data[:bar]
     @result << "bar"
   end
 

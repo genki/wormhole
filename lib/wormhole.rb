@@ -27,6 +27,7 @@ private
     callcc{|@cc|}
     if @opened
       @result = block.call @data if block
+      @data
     else
       Kernel.throw :__wormhole__, self
     end

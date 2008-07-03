@@ -19,8 +19,21 @@ depth of stack to outside.
 
 == Features/Problems
 
-
 == Synopsis
+
+Here is an example of use.
+
+  require 'rubygems'
+  require 'wormhole'
+
+  def some_method
+    Wormhole.throw
+  end
+
+  w = Wormhole.catch do
+    some_method
+  end
+  w.return
 
 == Copyright
 
