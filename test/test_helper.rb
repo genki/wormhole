@@ -1,7 +1,4 @@
 require 'test/unit'
 require 'rubygems'
-begin
-  require 'redgreen'
-rescue Exception
-end
+require 'redgreen'
 require File.dirname(__FILE__) + '/../lib/wormhole'

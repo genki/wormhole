@@ -19,6 +19,9 @@ depth of stack to outside.
 
 == Features/Problems
 
+* Named wormhole
+* Syntax constraint
+
 == Synopsis
 
 Here is an example of use.
@@ -30,10 +33,9 @@ Here is an example of use.
     Wormhole.throw
   end
 
-  w = Wormhole.catch do
+  Wormhole.catch do
     some_method
-  end
-  w.return
+  end.return
 
 == Copyright
 

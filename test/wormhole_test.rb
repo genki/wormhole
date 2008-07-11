@@ -25,22 +25,47 @@ class WormholeTest < Test::Unit::TestCase
   end
 
   def test_wormhole_without_throw
-    w = Wormhole.catch do
+    result = Wormhole.catch do
       "test"
+    end.return
+    assert_equal "test", result
+  end
+
+  def test_nested_wormhole
+    array = []
+    result = Wormhole.catch(:foo) do
+      Wormhole.catch(:bar) do
+        Wormhole.throw :foo, 1
+        Wormhole.throw :bar, 2
+        "test"
+      end.return do |value|
+        array << value
+      end
+    end.return do |value|
+      array << value
     end
-    assert_equal "test", w.return
+    assert_equal [1, 2], array
+    assert_equal 'test', result
+  end
+
+  def test_wormhole_without_trailing_return
+    assert_raise Wormhole::LateReturnError do
+      w = Wormhole.catch do
+        "test"
+      end
+      w.return
+    end
   end
 
   def test_wormhole_without_symbol
-    w = Wormhole.catch do
+    result = Wormhole.catch do
       @result << "foo"
       Wormhole.throw :bar => 'hello' do |data|
         @result << data[:bar]
       end
       @result << "bar"
       'result'
-    end
-    result = w.return do |data|
+    end.return do |data|
       @result << data[:bar]
       data[:bar] = 'world!'
     end

@@ -1,3 +1,22 @@
+== 0.1.2 / 2008-07-12
+
+* Implemented the named wormhole. catch and throw methods now receive a name
+parameter as the first param which is a symbol.
+* Added an exception class to make a constraint for syntax
+
+Now you must call return method after the catch block like this:
+
+  Wormhole.catch do
+    # something
+  end.return
+
+This code raises Wormhole::LateReturnError
+
+  w = Wormhole.catch do
+    # something
+  end
+	w.return
+
 == 0.1.1 / 2008-07-04
 
 * changed API according to the suggestion of @yugui.
